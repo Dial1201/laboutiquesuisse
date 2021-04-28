@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-	<a class="navbar-brand" href="#">La Boutique Suisse</a>
+	<a class="navbar-brand" href="{{ path('home') }}">La Boutique Suisse</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
@@ -15,15 +15,20 @@
 				<a class="nav-link" href="#">Contact</a>
 			</li>
 		</ul>
-		{% if app.user %}
-			<a href="{{path('account') }}">Mon compte</a>
-			|
-			<a href="{{path('app_logout') }}">Deconnexion</a>
-		{% else %}
-			<a href="{{path('app_login') }}">Connexion</a>
-			|
-			<a href="{{path('register') }}">Inscription</a>
-		{% endif %}
+		<div class="navbar-item-custom">
+			{% if app.user %}
+				<a href="{{path('account') }}">Mon compte
+					<small>{{app.user.firstname}}</small>
+				</a>
+				|
+				<a href="{{path('app_logout') }}">Deconnexion</a>
+			{% else %}
+				<a href="{{path('app_login') }}">Connexion</a>
+				|
+				<a href="{{path('register') }}">Inscription</a>
+			{% endif %}
+
+		</div>
 
 	</div>
 </nav>
