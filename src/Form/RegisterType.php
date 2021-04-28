@@ -18,6 +18,7 @@ class RegisterType extends AbstractType
         $builder
             ->add('firstname', TextType::class, [
                 'label' => false,
+                'required' => false,
                 'attr' => ['placeholder' => 'Merci de saisir votre prenom']
             ])
             ->add('lastname', TextType::class, [
