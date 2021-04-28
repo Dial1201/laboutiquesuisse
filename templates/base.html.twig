@@ -11,11 +11,14 @@
 		<main
 			role="main">
 			<!-- Carousel -->
-			{% include "partials/_carousel.html.twig" %}
+			{% if block('carousel') is defined %}
+				{% include "partials/_carousel.html.twig" %}
+			{% endif %}
 			<!-- Fin carousel -->
 
+			<!-- If carousel is not defined add padding top value bootstrap -->
 			<div
-				class="container marketing">
+				class="container marketing {% if block('carousel') is not defined %}mt-5{% endif %}">
 
 				<!-- Block content -->
 				{% block content %}{% endblock %}
