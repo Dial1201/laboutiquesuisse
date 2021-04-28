@@ -6,7 +6,6 @@
 {% block content %}
 	<h1>Inscription</h1>
 
-	{# {{form(form)}} #}
 	{{ form_start(form) }}
 
 	{{ form_errors(form) }}
@@ -30,14 +29,12 @@
 		<div class="col">
 			{{ form_row(form.password)  }}
 		</div>
-		<div class="col">
-			{{ form_row(form.password_confirm)  }}
-		</div>
+		{# <div class="col">
+					{{ form_row(form.password_confirm)  }}
+				</div> #}
 	</div>
 
-	<div class="btn btn-primary">
-		<i class="fas fa-save">Login</i>
-	</div>
+	<button type="submit" class="btn btn-primary">Login</button>
 
 	{{ form_end(form) }}
 
