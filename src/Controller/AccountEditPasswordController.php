@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class EditPasswordController extends AbstractController
+class AccountEditPasswordController extends AbstractController
 {
 
     private $em;
@@ -25,7 +25,7 @@ class EditPasswordController extends AbstractController
     }
 
     /**
-     * @Route("/edit/password", name="edit_password")
+     * @Route("compte/edit", name="edit_password")
      */
     public function edit(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
