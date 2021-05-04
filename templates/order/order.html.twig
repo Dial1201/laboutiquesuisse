@@ -7,19 +7,20 @@
 	<hr>
 	<div class="row">
 		<div class="col-md-6">
-			<p>
-				{% set formhtml %}
+			{% set formhtml %}
+			{{ form_start(form, {action:path('order_recap')}) }}
+			{{ form_label(form.address, 'Choississez votre adresse de livraison') }}
+			<a href="{{ path('account_address_add') }}">Ajouter une nouvelle adresse</a>
+			{{ form_end(form) }}
 
-				{{ form(form) }}
-					{% endset %}
-					{{ formhtml|replace({'[br]' : '<br>'})|raw }}</p>
-			</p>
+			{% endset %}
+			{{ formhtml|replace({'[br]' : '<br>'})|raw }}
 		</div>
 		<div class="col-md-6">
 			<b>Récapitulatif de votre commande</b>
 			<div class="order-summary">
 				{% for key,product in cart %}
-					<div class="row" {% if key > 0 %} mt-2 {% endif %}>
+					<div class="row mt-3" {% if key > 0 %} mt-2 {% endif %}>
 						<div class="col-md-2"><img src="uploads/products/{{ product.product.illustration }}" alt="{{ product.product.name }}" height="75px"></div>
 						<div class="col-md-8 my-auto">
 							{{product.product.name}}<br>
@@ -31,9 +32,6 @@
 				{% endfor %}
 			</div>
 
-			<p>
-				<b>Bouton pour payer</b>
-			</p>
 		</div>
 	</div>
 
