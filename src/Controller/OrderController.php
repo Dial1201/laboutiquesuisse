@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use Stripe\Stripe;
 use App\Classes\Cart;
 use App\Entity\Order;
 use App\Form\OrderType;
-use App\Entity\OrderDetails;
 
+use App\Entity\OrderDetails;
+use Stripe\Checkout\Session;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +42,7 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @Route("/commande/recapitulatif", name="order_recap", methods={"POST"})
+     * @Route("/commande/recapitulatif", name="order_recap", methods={"POST","GET"})
      */
     public function aadOrderRecap(Cart $cart, Request $request): Response
     {
@@ -70,6 +72,8 @@ class OrderController extends AbstractController
 
             // Enregistrer commande
             $order = new Order;
+            $reference = $date->format('dmY') . '-' . uniqid();
+            $order->setReference($reference);
             $order->setUser($this->getUser());
             $order->setCreatedAt($date);
             $order->setCarrierName($carriers->getName());
@@ -78,6 +82,7 @@ class OrderController extends AbstractController
             $order->setIsPaid(0);
 
             $this->em->persist($order);
+
 
             //enregistrer produit
             foreach ($cart->getCart() as $product) {
@@ -91,12 +96,15 @@ class OrderController extends AbstractController
 
                 $this->em->persist($orderDetails);
             }
+            // dd($order);
 
+            $this->em->flush();
 
             return $this->render('order/aadOrderRecap.html.twig', [
                 'cart' => $cart->getCart(),
                 'carrier' => $carriers,
-                'delivery' => $delivery_content
+                'delivery' => $delivery_content,
+                'reference' => $order->getReference()
             ]);
         }
         return $this->redirectToRoute('cart');
