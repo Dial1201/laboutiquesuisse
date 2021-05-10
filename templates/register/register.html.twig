@@ -3,6 +3,14 @@
 {% block content %}
 	<h1>Inscription</h1>
 
+	{% if notification %}
+		<div class="alert alert-info">
+			{{ notification }}
+			<hr>
+		</div>
+	{% endif %}
+
+
 	{{ form_start(form) }}
 
 	{{ form_errors(form) }}
@@ -27,8 +35,8 @@
 			{{ form_row(form.password)  }}
 		</div>
 		{# <div class="col">
-							{{ form_row(form.password_confirm)  }}
-						</div> #}
+											{{ form_row(form.password_confirm)  }}
+										</div> #}
 	</div>
 
 	<button type="submit" class="btn btn-primary">Login</button>

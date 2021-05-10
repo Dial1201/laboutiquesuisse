@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Classes\Cart;
+use App\Classes\Mail;
 use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,13 +31,16 @@ class OrderValidateController extends AbstractController
         }
         // Modifier isPaid à 1
         if (!$order->getIsPaid()) {
-        // vider panier
+            // vider panier
             $cart->remove();
 
             $order->setIsPaid(1);
 
             $this->em->flush();
             //Envoyer un email de confirmation
+            $mail = new Mail();
+            $content = "Bonjour" . $order->getUser()->getFirstname() . "<br/>" . 'Merci pour votre commande' . "<br/>" . 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s,';
+            $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstname(), 'Votre commande sur la boutique suisse est validée.', $content);
         }
         // Afficher les info utilisateur
 
