@@ -29,20 +29,21 @@ class OrderValidateController extends AbstractController
         if (!$order || $order->getUser() != $this->getUser()) {
             return $this->redirectToRoute('home');
         }
-        // Modifier isPaid à 1
-        if (!$order->getIsPaid()) {
+
+        if ($order->getState() == 0) {
             // vider panier
             $cart->remove();
 
-            $order->setIsPaid(1);
+            $order->setState(1);
 
             $this->em->flush();
+
             //Envoyer un email de confirmation
             $mail = new Mail();
             $content = "Bonjour" . $order->getUser()->getFirstname() . "<br/>" . 'Merci pour votre commande' . "<br/>" . 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s,';
             $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstname(), 'Votre commande sur la boutique suisse est validée.', $content);
         }
-        // Afficher les info utilisateur
+
 
 
         return $this->render('order_validate/success.html.twig', [
