@@ -20,7 +20,7 @@ class StripeController extends AbstractController
     public function stripe(Cart $cart, $reference, EntityManagerInterface $em)
     {
         $product_for_stripe = [];
-        $YOUR_DOMAIN = 'https://127.0.0.1:8000';
+        $YOUR_DOMAIN = 'https://127.0.0.1:8001';
 
 
         $order = $em->getRepository(Order::class)->findOneBy(['reference' => $reference]);
@@ -59,7 +59,7 @@ class StripeController extends AbstractController
         ];
 
 
-        Stripe::setApiKey($_ENV['SP_APIKEY_PRIVATE']);
+        Stripe::setApiKey($_ENV["SP_APIKEY_PRIVATE"]);
 
         $checkout_session = Session::create([
             'customer_email' => $this->getUser()->getEmail(),

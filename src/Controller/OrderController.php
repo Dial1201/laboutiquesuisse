@@ -104,7 +104,7 @@ class OrderController extends AbstractController
                 'cart' => $cart->getCart(),
                 'carrier' => $carriers,
                 'delivery' => $delivery_content,
-                'apiKeyPublic' => $_ENV['SP_APIKEY_PUBLIC'],
+                'apiKeyPublic' => $_ENV["SP_APIKEY_PUBLIC"],
                 'reference' => $order->getReference()
             ]);
         }
